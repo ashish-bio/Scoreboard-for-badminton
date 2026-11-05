@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07111f" />
+  <title>GPK Badminton Live Scoreboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="badminton.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Government Polytechnic Kishanganj home">
+      <span class="brand-mark">GPK<span>•</span></span>
+      <span class="brand-copy"><strong>GOVERNMENT POLYTECHNIC</strong><small>KISHANGANJ · BADMINTON</small></span>
+    </a>
+    <div class="header-actions">
+      <div class="live-pill"><span class="live-dot"></span> LIVE SCOREBOARD</div>
+      <button id="authBtn" class="auth-btn">SCORER LOGIN</button>
+      <span id="connectionStatus" class="connection-status">CONNECTING…</span>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    <section class="intro">
+      <div class="eyebrow"><span></span> COLLEGE BADMINTON CENTRAL</div>
+      <h1>THE RALLY IS <em>ON.</em></h1>
+      <p>Singles or doubles. Tap the winner of every rally and the scoreboard updates live.</p>
+    </section>
+
+    <section class="scoreboard card">
+      <div class="scoreboard-head">
+        <div>
+          <div class="match-label">BADMINTON SCORECARD <span class="live-tag">LIVE</span></div>
+          <div class="match-subtitle">GOVERNMENT POLYTECHNIC KISHANGANJ</div>
+        </div>
+        <div class="head-right">
+          <label class="setting" for="matchType">TYPE
+            <select id="matchType" aria-label="Singles or doubles">
+              <option value="singles">SINGLES</option>
+              <option value="doubles">DOUBLES</option>
+            </select>
+          </label>
+          <label class="setting" for="pointsSel">POINTS
+            <select id="pointsSel" aria-label="Points per game">
+              <option value="11">11</option>
+              <option value="15">15</option>
+              <option value="21" selected>21</option>
+            </select>
+          </label>
+          <label class="setting" for="bestOfSel">BEST OF
+            <select id="bestOfSel" aria-label="Number of games">
+              <option value="1">1</option>
+              <option value="3" selected>3</option>
+              <option value="5">5</option>
+            </select>
+          </label>
+          <div class="game-chip"><span class="chip-icon">◆</span> <span id="gameLabel">GAME 1</span></div>
+        </div>
+      </div>
+
+      <div class="sides">
+        <div class="side side-a" id="sideA">
+          <div class="side-label">SIDE A</div>
+          <input id="pa0" class="player-input" maxlength="22" placeholder="PLAYER NAME" aria-label="Side A player 1">
+          <input id="pa1" class="player-input second" maxlength="22" placeholder="PARTNER NAME" aria-label="Side A player 2">
+          <div id="scoreA" class="big-score">0</div>
+          <div id="serveA" class="serve-badge"></div>
+          <div id="pipsA" class="pips" aria-label="Games won by side A"></div>
+        </div>
+
+        <div class="vs">VS</div>
+
+        <div class="side side-b" id="sideB">
+          <div class="side-label">SIDE B</div>
+          <input id="pb0" class="player-input" maxlength="22" placeholder="PLAYER NAME" aria-label="Side B player 1">
+          <input id="pb1" class="player-input second" maxlength="22" placeholder="PARTNER NAME" aria-label="Side B player 2">
+          <div id="scoreB" class="big-score">0</div>
+          <div id="serveB" class="serve-badge"></div>
+          <div id="pipsB" class="pips" aria-label="Games won by side B"></div>
+        </div>
+      </div>
+
+      <div id="statusBanner" class="status-banner" hidden></div>
+
+      <div class="games-strip">
+        <div class="strip-title">GAMES</div>
+        <div id="gamesList" class="games-list"><span class="empty-game">—</span></div>
+        <div class="strip-count"><span id="gwA">0</span> – <span id="gwB">0</span></div>
+      </div>
+    </section>
+
+    <section class="controls-grid">
+      <div class="card scoring-card">
+        <div class="section-heading">
+          <div><span class="section-kicker">QUICK ACTIONS</span><h2>Award the rally</h2></div>
+          <span class="step-number">01 / SCORE</span>
+        </div>
+        <p class="helper">Tap the side that won the rally. Serve, court and games update automatically.</p>
+
+        <div class="point-buttons">
+          <button id="pointA" class="point-btn side-a-btn" data-point="a"><span class="pb-plus">+1</span><span class="pb-name">SIDE A</span></button>
+          <button id="pointB" class="point-btn side-b-btn" data-point="b"><span class="pb-plus">+1</span><span class="pb-name">SIDE B</span></button>
+        </div>
+
+        <div class="section-divider"><span>CORRECTIONS</span></div>
+        <div class="utility-row">
+          <button id="serveBtn" class="utility-btn">⇄ &nbsp;CHANGE SERVE</button>
+          <button id="courtBtn" class="utility-btn doubles-only">⇄ &nbsp;SWAP SERVER COURT</button>
+        </div>
+        <div class="utility-row">
+          <button id="undoBtn" class="utility-btn">↶ &nbsp;UNDO LAST POINT</button>
+          <button id="newMatchBtn" class="utility-btn reset">↻ &nbsp;NEW MATCH</button>
+        </div>
+      </div>
+
+      <aside class="card match-info">
+        <div class="section-heading">
+          <div><span class="section-kicker">MATCH CENTRE</span><h2>At a glance</h2></div>
+          <span class="info-icon">✦</span>
+        </div>
+        <div class="info-stat">
+          <span class="info-label">FORMAT</span>
+          <strong id="formatText">SINGLES · BEST OF 3</strong>
+        </div>
+        <div class="info-stat">
+          <span class="info-label">NOW SERVING</span>
+          <strong id="servingText">—</strong>
+          <p id="courtText">RIGHT COURT</p>
+        </div>
+        <div class="info-stat last-stat">
+          <span class="info-label">GAME RULE</span>
+          <strong id="ruleText">21</strong>
+          <p>Rally point scoring · win by 2 · capped at the maximum</p>
+        </div>
+        <div class="college-stamp"><span>GPK</span><div><b>PLAY WITH PRIDE.</b><small>GOVERNMENT POLYTECHNIC KISHANGANJ</small></div></div>
+      </aside>
+    </section>
+
+    <section class="card history-card">
+      <div class="section-heading">
+        <div><span class="section-kicker">RALLY-BY-RALLY</span><h2>Recent points</h2></div>
+        <span class="step-number">LIVE FEED</span>
+      </div>
+      <div id="history" class="history-list"><div class="history-empty">No points yet. Start scoring to see the rally feed.</div></div>
+    </section>
+
+    <footer><span>GPK BADMINTON</span><i>•</i> MADE FOR THE SPIRIT OF THE GAME <i>•</i> GOVERNMENT POLYTECHNIC KISHANGANJ</footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div class="viewer-note">PUBLIC LIVE VIEW · Only the signed-in scorer can change the score.</div>
+  <script type="module" src="badminton.js"></script>
+</body>
+</html>
